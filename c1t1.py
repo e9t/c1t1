@@ -4,6 +4,7 @@
 from collections import OrderedDict
 import json
 import urllib2
+import webbrowser
 
 import rumps
 
@@ -22,8 +23,10 @@ COINS = OrderedDict([
     ('etc', {'icon': u'\uA792'}),
     ('xrp', {'icon': u'X'}),
 ])
+COINEX_URL = 'https://coinone.co.kr/exchange'
 PRICES_API = 'https://api.coinone.co.kr/ticker/?format=json&currency'
 
+coinex = 'Go to Coinone'
 about = 'About %s v%s' % (__appname__, __version__)
 
 
@@ -34,7 +37,7 @@ class App(rumps.App):
         for coin in COINS:
             self.coins[coin] = rumps.MenuItem(coin)
         self.coins['btc'].state = 1  # turn on bitcoin
-        self.menu = self.coins.values() + [about]
+        self.menu = self.coins.values() + [coinex, about]
         self.update_prices()
         self.update_title()
 
@@ -75,8 +78,12 @@ class App(rumps.App):
         sender.state = not sender.state
         self.update_title()
 
+    @rumps.clicked(coinex)
+    def goto_coinex(self, sender):
+        webbrowser.open(COINEX_URL)
+
     @rumps.clicked(about)
-    def load_about(self, sender):
+    def show_about(self, sender):
         title = about
         message = '\n'.join([
             __description__,
