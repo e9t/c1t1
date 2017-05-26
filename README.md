@@ -2,12 +2,17 @@
 
 Retrieves cryptocurrency prices from [Coinone](http://coinone.co.kr) every one minute and displays them on the MacOSX menubar.
 
-![](c1t1.png)
+<img src="c1t1.png" width="400px">
 
-## Requirements
+[[download]](dist/c1t1_0.1.0.zip)
+
+## Build app
+
+Requirements:
 
     pip install -r requirements.txt
 
-## Bundle as app
+Bundle:
 
+    # creates dist/C1t1.app
     python setup.py py2app
