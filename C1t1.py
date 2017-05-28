@@ -100,4 +100,4 @@ class App(rumps.App):
 
 
 if __name__ == '__main__':
-    App().run()
+    App().run(_NOTIFICATIONS=False)
