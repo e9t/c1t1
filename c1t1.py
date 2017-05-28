@@ -33,11 +33,11 @@ about = 'About %s v%s' % (__appname__, __version__)
 class App(rumps.App):
     def __init__(self):
         super(App, self).__init__(__appname__)
-        self.coins = OrderedDict()
+        self.coin_menus = OrderedDict()
         for coin in COINS:
-            self.coins[coin] = rumps.MenuItem(coin)
-        self.coins['btc'].state = 1  # turn on bitcoin
-        self.menu = self.coins.values() + [coinex, about]
+            self.coin_menus[coin] = rumps.MenuItem(coin)
+        self.coin_menus['btc'].state = 1  # turn on bitcoin
+        self.menu = self.coin_menus.values() + [coinex, about]
         self.update_prices()
         self.update_title()
 
@@ -47,7 +47,7 @@ class App(rumps.App):
     def update_title(self):
         title = []
         for coin in COINS:
-            if self.coins[coin].state == 1:
+            if self.coin_menus[coin].state == 1:
                 i = COINS[coin]['icon']
                 p = '{:0,.0f}'.format(int(self.prices[coin]['last']))
                 title.extend([i, p])
