@@ -45,12 +45,17 @@ class App(rumps.App):
         self.prices = json.loads(urllib2.urlopen(PRICES_API).read())
 
     def update_title(self):
+        # return coin prices if some coins are selected
         title = []
         for coin in COINS:
             if self.coin_menus[coin].state == 1:
                 i = COINS[coin]['icon']
                 p = '{:0,.0f}'.format(int(self.prices[coin]['last']))
                 title.extend([i, p])
+        # return appname if no coins are selected
+        if not title:
+            title = [__appname__]
+
         self.title = ' '.join(title)
 
     @rumps.timer(TICK_INTERVAL)
