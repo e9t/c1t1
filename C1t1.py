@@ -12,7 +12,7 @@ __appname__     = 'C1t1'
 __author__      = 'Lucy Park'
 __description__ = 'Retrieves cryptocurrency prices from Coineone.co.kr every one minute and displays them on the MacOSX menubar.'
 __repository__  = 'http://github.com/e9t/c1t1'
-__version__     = '0.1.0'
+__version__     = '0.1.1'
 __year__        = '2017'
 
 
@@ -26,6 +26,8 @@ COINS = OrderedDict([
 COINEX_URL = 'https://coinone.co.kr/exchange'
 PRICES_API = 'https://api.coinone.co.kr/ticker/?format=json&currency'
 
+# declare some static menus
+refresh = 'Manually refresh data'
 coinex = 'Go to Coinone'
 about = 'About %s v%s' % (__appname__, __version__)
 
@@ -37,7 +39,7 @@ class App(rumps.App):
         for coin in COINS:
             self.coin_menus[coin] = rumps.MenuItem(coin)
         self.coin_menus['btc'].state = 1  # turn on bitcoin
-        self.menu = self.coin_menus.values() + [coinex, about]
+        self.menu = self.coin_menus.values() + [refresh, coinex, about]
         self.update_prices()
         self.update_title()
 
@@ -81,6 +83,11 @@ class App(rumps.App):
     @rumps.clicked('xrp')
     def toggle_xrp(self, sender):
         sender.state = not sender.state
+        self.update_title()
+
+    @rumps.clicked(refresh)
+    def refresh_data(self, sender):
+        self.update_prices()
         self.update_title()
 
     @rumps.clicked(coinex)
