@@ -12,15 +12,17 @@ __appname__     = 'C1t1'
 __author__      = 'Lucy Park'
 __description__ = 'Retrieves cryptocurrency prices from Coineone.co.kr every one minute and displays them on the MacOSX menubar.'
 __repository__  = 'http://github.com/e9t/c1t1'
-__version__     = '0.1.1'
+__version__     = '0.1.2'
 __year__        = '2017'
 
 
 TICK_INTERVAL = 60  # interval to retrieve ticks (seconds)
 COINS = OrderedDict([
+    ('bch', {'icon': u'C'}),
     ('btc', {'icon': u'\u20BF'}),
-    ('eth', {'icon': u'\u039E'}),
     ('etc', {'icon': u'\uA792'}),
+    ('eth', {'icon': u'\u039E'}),
+    ('qtum', {'icon': u'Q'}),
     ('xrp', {'icon': u'X'}),
 ])
 COINEX_URL = 'https://coinone.co.kr/exchange'
@@ -65,6 +67,11 @@ class App(rumps.App):
         self.update_prices()
         self.update_title()
 
+    @rumps.clicked('bch')
+    def toggle_bch(self, sender):
+        sender.state = not sender.state
+        self.update_title()
+
     @rumps.clicked('btc')
     def toggle_btc(self, sender):
         sender.state = not sender.state
@@ -77,6 +84,11 @@ class App(rumps.App):
 
     @rumps.clicked('etc')
     def toggle_etc(self, sender):
+        sender.state = not sender.state
+        self.update_title()
+
+    @rumps.clicked('qtum')
+    def toggle_qtum(self, sender):
         sender.state = not sender.state
         self.update_title()
 
